@@ -1,0 +1,55 @@
+//{ Driver Code Starts
+#include<bits/stdc++.h> 
+using namespace std;
+
+// } Driver Code Ends
+class Solution{
+public:
+    bool helper(int n,unordered_set<int> temp)
+    {
+        if(n==1) return true;
+        
+        int sum=0;
+        while(n>0){
+            sum+=(n%10)*(n%10);
+            n=n/10;
+        }
+        if(temp.count(sum)==1) 
+        return false;
+        
+        else temp.insert(sum);
+        
+        return helper(sum,temp);
+        
+        
+    }
+
+    int nextHappy(int N){
+        // code here
+        for(int i=N+1;i<1e5;i++)
+        {   
+            unordered_set<int> temp;
+            bool ans=helper(i,temp);
+            if(ans==true) return i;
+            else continue;
+        }
+        
+        return 1;
+    }
+};
+
+//{ Driver Code Starts.
+int main() 
+{ 
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int N;
+        cin>>N;
+        Solution ob;
+        cout << ob.nextHappy(N) << endl;
+    }
+    return 0; 
+}
+// } Driver Code Ends

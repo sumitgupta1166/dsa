@@ -1,0 +1,86 @@
+//{ Driver Code Starts
+#include<bits/stdc++.h>
+using namespace std;
+#define MAX 1000
+
+// } Driver Code Ends
+class Solution
+{
+    public:
+    /*You are required to complete this method*/
+    int findK(int a[MAX][MAX],int n,int m,int k)
+    {
+ 		int tmp=1;
+         int i=0,j=0;
+        while(k){
+            if(k==1){
+                return a[i][j];
+            }
+            a[i][j]=INT_MAX;
+            if(tmp==1){
+                if(j==m-1 || a[i][j+1]==INT_MAX){
+                    tmp=2;
+                    i++;
+                }else{
+                    j++;
+                }
+            }else if(tmp==2){
+                if(i==n-1||a[i+1][j]==INT_MAX){
+                    tmp=3;
+                    j--;
+                }else{
+                    i++;
+                }
+            }else if(tmp==3){
+                if(j==0 || a[i][j-1]==INT_MAX){
+                    tmp=4;
+                    i--;
+                }else{
+                    j--;
+                }
+            }else{
+                if(i==0 || a[i-1][j]==INT_MAX){
+                    j++;
+                    tmp=1;
+                }else{
+                    i--;
+                }
+            }
+            k--;
+        }
+        return -1;// Your code goes here.
+    }
+};
+
+
+
+
+
+//{ Driver Code Starts.
+int main()
+{
+    int T;
+    cin>>T;
+  
+    while(T--)
+    {
+        int n,m;
+        int k=0;
+        //cin>>k;
+        cin>>n>>m>>k;
+        int a[MAX][MAX];
+        
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                cin>>a[i][j];
+            }
+        }
+        Solution ob;
+        cout<<ob.findK(a,n,m,k)<<endl;
+        
+       
+    }
+}
+// } Driver Code Ends

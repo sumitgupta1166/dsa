@@ -1,0 +1,98 @@
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long int ll;
+
+// } Driver Code Ends
+class Solution
+{
+    public:
+    int solve(int arr[],int start,int end){
+        //base case
+        if(start>=end){
+            return 0;
+        }
+        int include=arr[start]+solve(arr,start+2,end);
+        int exclude=0+solve(arr,start+1,end);
+        return max(include,exclude);
+        
+    }
+    int solveMemo(vector<int>&dp,int arr[],int start,int end){
+        //base case
+        if(start>=end){
+            return 0;
+        }
+        //step 3 -> D R Y
+        if(dp[start]!=-1)
+        return dp[start];
+        
+        int include=arr[start]+solveMemo(dp,arr,start+2,end);
+        int exclude=0+solveMemo(dp,arr,start+1,end);
+        // step 2 -> assignment
+        return dp[start]=max(include,exclude);
+    }
+    int solveTab(int arr[],int n){
+        vector<int>dp(n+2,0);
+        for(int start=n-1;start>=0;start--){
+            int include=arr[start]+dp[start+2];
+            int exclude=0+dp[start+1];
+             dp[start]=max(include,exclude);
+        }
+        return dp[0];
+    }
+    int solveTabOptimised(int arr[],int n){
+        int next1=0;
+        int next2=0;
+        int curr=0;
+        for(int start=n-1;start>=0;start--){
+            int include=arr[start]+next2;
+            int exclude=0+next1;
+             curr=max(include,exclude);
+             next2=next1;
+             next1=curr;
+        }
+        return next1;;
+    }
+    //Function to find the maximum money the thief can get.
+    int FindMaxSum(int arr[], int n)
+    {
+        // Your code here
+        // recursion solution -> tc ->O(2^n) sc ->O(recursive stack)
+        // return solve(arr,0,n);
+        
+        // recursion + memoization -> tc->O(n) sc ->O(n)
+        // vector<int>dp(n+1,-1);
+        // return solveMemo(dp,arr,0,n);
+        
+        // tabulation  -> bottom up dp -> tc->O(n) sc ->O(n)
+        // return solveTab(arr,n);
+        
+        // tabulation  -> bottom up dp optimised -> tc->O(n) sc ->O(1)
+        return solveTabOptimised(arr,n);
+    }
+};
+
+//{ Driver Code Starts.
+int main()
+{
+    //taking total testcases
+	int t;
+	cin>>t;
+	while(t--)
+	{
+	    //taking number of houses
+		int n;
+		cin>>n;
+		int a[n];
+		
+		//inserting money of each house in the array
+		for(int i=0;i<n;++i)
+			cin>>a[i];
+		Solution ob;
+		//calling function FindMaxSum()
+		cout<<ob.FindMaxSum(a,n)<<endl;
+	}
+	return 0;
+}
+
+// } Driver Code Ends

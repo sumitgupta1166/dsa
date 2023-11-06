@@ -1,0 +1,72 @@
+//{ Driver Code Starts
+// Initial Template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+// User function Template for C++
+
+class Solution{
+public:
+    vector<int> matrixSum(int n, int m, vector<vector<int>> mat, int q, vector<int> queries[])
+    {
+        vector <int> ans;
+        int dr1[]={-1, -1, -1, 0, 0, 1, 1, 1};
+        int dc1[]={-1, 0, 1, -1, 1, -1, 0, 1};
+        int dr2[] = {-2, -2, -2, -2, -2, -1, 0, 1, 2, 2, 2, 2, 2, 1, 0, -1} ;
+        int dc2[] = {-2, -1, 0, 1, 2, 2, 2, 2, 2, 1, 0, -1, -2, -2, -2, -2} ;
+        for(int i=0; i<q; i++){
+            int op=queries[i][0], row=queries[i][1], col=queries[i][2];
+            if(op==1){
+                int sum=0;
+                for(int r=0, c=0; r<8 && c<8; r++, c++){
+                    if((row-dr1[r] >=0 && row-dr1[r]<n) && (col-dc1[c] >=0 && col-dc1[c]<m)) sum+=mat[row-dr1[r]][col-dc1[c]];
+                    
+                }
+                ans.push_back(sum);
+            }
+            if(op==2){
+                int sum=0;
+                for(int r=0, c=0; r<16 && c<16; r++, c++){
+                    if((row-dr2[r] >=0 && row-dr2[r]<n) && (col-dc2[c] >=0 && col-dc2[c]<m)) sum+=mat[row-dr2[r]][col-dc2[c]];
+                    
+                }
+                ans.push_back(sum);
+                }
+            
+        }
+        
+        return ans;// code here
+    }
+};
+
+//{ Driver Code Starts.
+
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        int n, m, q, ty, i, j;
+        cin>>n>>m;
+        vector<vector<int>> mat(n, vector<int>(m, 0));
+        for(int i = 0;i < n;i++)
+            for(int j = 0;j < m;j++)
+                cin>>mat[i][j];
+        cin>>q;
+        vector<int> queries[q];
+        for(int k = 0;k < q;k++){
+            cin>>ty>>i>>j;
+            queries[k].push_back(ty);
+            queries[k].push_back(i);
+            queries[k].push_back(j);
+        }
+        
+        Solution ob;
+        vector<int> ans = ob.matrixSum(n, m, mat, q, queries);
+        for(int u: ans)
+            cout<<u<<"\n";
+    }
+    return 0;
+}
+// } Driver Code Ends

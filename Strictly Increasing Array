@@ -1,0 +1,44 @@
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+class Solution {
+  public: 
+    int f(vector<int>&nums,int prev,int ind,vector<vector<int>>&dp){
+       if(ind>=nums.size())return 0;
+       if(dp[ind][prev+1]!=-1)return dp[ind][prev+1];
+       int len=0+f(nums,prev,ind+1,dp);
+       if(prev==-1||nums[ind]>nums[prev]&&nums[ind]-nums[prev]>=ind-prev){
+           len=max(len,1+f(nums,ind,ind+1,dp));
+       }
+       return dp[ind][prev+1]=len;
+       
+   }
+    int min_operations(vector<int>& nums) {
+        int n=nums.size();
+        vector<vector<int>>dp(n+1,vector<int>(n+1,-1));
+        int ans=f(nums,-1,0,dp);
+        return n-ans;
+        // Code here
+    }
+};
+
+//{ Driver Code Starts.
+int main() {
+    int tc;
+    cin >> tc;
+    while (tc--) {
+        int n;
+        cin >> n;
+        vector<int> nums(n);
+        for (int i = 0; i < n; i++)
+            cin >> nums[i];
+        Solution ob;
+        int ans = ob.min_operations(nums);
+        cout << ans << "\n";
+    }
+    return 0;
+}
+// } Driver Code Ends

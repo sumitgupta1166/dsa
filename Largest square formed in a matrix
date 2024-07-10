@@ -1,0 +1,85 @@
+//{ Driver Code Starts
+// Initial Template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+// User function Template for C++
+
+class Solution {
+  public:
+     bool isSafe(int x, int y, vector<vector<int>> &mat, int n, int m){
+        return x<n && y<m && mat[x][y]==1;
+    }
+    int maxSquare(int n, int m, vector<vector<int>> mat) {
+        int ans = 0;
+        queue<pair<int, int>> q;
+        for(int i=0; i<n; i++){
+            for(int j=0; j<m; j++){
+                if(mat[i][j]==1){
+                    int res = 1;
+                    q.push({i, j});
+                    while(!q.empty()){
+                        int size=q.size();
+                        bool flag = 0;
+                        for(int i=0; i<size; i++){
+                            auto front = q.front();
+                            q.pop();
+                            
+                            int x=front.first, y=front.second;
+                            
+                            int dx[3] = {1, 0, 1};
+                            int dy[3] = {1, 1, 0};
+                            
+                            for(int k=0; k<3; k++){
+                                int nx=x+dx[k], ny=y+dy[k];
+                                
+                                if(isSafe(nx, ny, mat, n, m)){
+                                    q.push({nx, ny});
+                                }
+                                else{
+                                    flag = 1;
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        if(flag == 1) {
+                            while(!q.empty()){
+                                q.pop();
+                            }
+                            break;
+                        }  
+                        else{
+                            res++;
+                        }
+                    }
+                    ans = max(ans, res);
+                }
+            }
+        }
+        return ans;
+        // code here
+    }
+};
+
+//{ Driver Code Starts.
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int n, m;
+        cin >> n >> m;
+        vector<vector<int>> mat(n, vector<int>(m, 0));
+        for (int i = 0; i < n * m; i++)
+            cin >> mat[i / m][i % m];
+
+        Solution ob;
+        cout << ob.maxSquare(n, m, mat) << "\n";
+    }
+    return 0;
+}
+// } Driver Code Ends

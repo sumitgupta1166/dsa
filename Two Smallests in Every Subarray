@@ -1,0 +1,71 @@
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+class Solution {
+  public:
+    int pairWithMaxSum(vector<int>& arr) {
+        vector<int> ans;
+        stack<int> st;
+        for(int i=arr.size()-1;i>=0;i--) {
+            while(!st.empty() && arr[st.top()]>arr[i]) st.pop();
+            if(st.empty()) ans.push_back(-1);
+            else ans.push_back(st.top());
+            
+            st.push(i);
+        }
+        reverse(ans.begin(),ans.end());
+        
+        
+        
+        //prev smaller
+        vector<int> ans2;
+        stack<int> st2;
+        for(int i=0;i<arr.size();i++) {
+            while(!st2.empty() && arr[st2.top()]>arr[i]) st2.pop();
+            if(st2.empty()) ans2.push_back(-1);
+            else ans2.push_back(st2.top());
+            
+            st2.push(i);
+        }
+        
+        
+        
+        int maxi = -1;
+        for(int i=0;i<arr.size();i++) {
+            if(ans[i]!=-1)
+                maxi = max(maxi, arr[ans[i]]+arr[i]);
+            if(ans2[i]!=-1)
+                maxi = max(maxi, arr[ans2[i]]+arr[i]);
+        }
+        return maxi;
+        // code here
+    }
+};
+
+//{ Driver Code Starts.
+
+int main() {
+    int tc;
+    cin >> tc;
+    cin.ignore();
+
+    while (tc--) {
+        string input;
+        getline(cin, input);
+
+        stringstream ss(input);
+        vector<int> a;
+        int number;
+        while (ss >> number) {
+            a.push_back(number);
+        }
+
+        Solution obj;
+        int res = obj.pairWithMaxSum(a);
+        cout << res << endl;
+    }
+}
+// } Driver Code Ends

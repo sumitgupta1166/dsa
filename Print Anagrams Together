@@ -1,0 +1,67 @@
+//{ Driver Code Starts
+// Initial Template for C++
+#include <bits/stdc++.h>
+#include <unordered_map>
+using namespace std;
+
+
+// } Driver Code Ends
+// User function Template for C++
+
+class Solution {
+  public:
+    vector<vector<string>> anagrams(vector<string>& arr) {
+         map<string, vector<string>> mp;
+        for (auto i : arr) {
+            string temp = i; // Copy the string
+            sort(temp.begin(), temp.end()); // Sort the string to create a common key
+            mp[temp].push_back(i); // Group the original string under its sorted key
+        }
+
+        vector<vector<string>> res; // Initialize a vector to store the result
+
+        // Extract grouped anagrams from the map
+        for (auto i : mp) {
+            res.push_back(i.second); // Add each group of anagrams to the result
+        }
+
+        return res; // Return the grouped anagrams
+        // code here
+    }
+};
+
+//{ Driver Code Starts.
+
+int main() {
+    int t;
+    cin >> t;
+    cin.ignore();
+    while (t--) {
+
+        vector<string> arr;
+        string input_line;
+        getline(cin, input_line);
+        stringstream ss(input_line);
+        string word;
+        while (ss >> word) {
+            arr.push_back(word);
+        }
+
+        Solution ob;
+        vector<vector<string> > result = ob.anagrams(arr);
+        sort(result.begin(), result.end());
+        for (int i = 0; i < result.size(); i++) {
+            for (int j = 0; j < result[i].size(); j++) {
+                cout << result[i][j] << " ";
+            }
+            cout << "\n";
+        }
+
+        cout << "~"
+             << "\n";
+    }
+
+    return 0;
+}
+
+// } Driver Code Ends

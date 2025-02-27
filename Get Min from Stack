@@ -1,0 +1,97 @@
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+
+class Solution {
+  public:
+    int mini = INT_MAX;
+    stack<pair<int, int>> st;
+    Solution() {
+        // code here
+    }
+
+    // Add an element to the top of Stack
+    void push(int x) {
+        if(x < mini)
+            mini = x;
+        
+        st.push({x, mini});
+        // code here
+    }
+
+    // Remove the top element from the Stack
+    void pop() {
+        if(st.empty())
+            return;
+        st.pop();
+        if(st.empty())
+        mini = INT_MAX;
+        else
+        mini = st.top().second;
+        // code here
+    }
+
+    // Returns top element of the Stack
+    int peek() {
+        if(st.empty())
+        return -1;
+            
+        else
+        return st.top().first;
+        // code here
+    }
+
+    // Finds minimum element of Stack
+    int getMin() {
+        if(st.empty())
+        return -1;
+            
+        else
+        return st.top().second;
+        // code here
+    }
+};
+
+
+//{ Driver Code Starts.
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int q;
+        cin >> q;
+
+        Solution ob;
+
+        while (q--) {
+            int qt;
+            cin >> qt;
+
+            if (qt == 1) {
+                // push
+                int att;
+                cin >> att;
+                ob.push(att);
+            } else if (qt == 2) {
+                // pop
+                ob.pop();
+            } else if (qt == 3) {
+                // peek
+                cout << ob.peek() << " ";
+            } else if (qt == 4) {
+                // getMin
+                cout << ob.getMin() << " ";
+            }
+        }
+        cout << endl;
+        cout << "~" << endl;
+    }
+
+    return 0;
+}
+
+// } Driver Code Ends

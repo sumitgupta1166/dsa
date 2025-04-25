@@ -1,0 +1,63 @@
+//{ Driver Code Starts
+// Initial template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+
+// User function template for C++
+
+class Solution {
+  public:
+    int majorityElement(vector<int>& arr) {
+        // code here
+        int cnt=1;
+        int ele=0;
+        for(int i=1;i<arr.size();i++)
+        {
+            if(arr[ele]==arr[i]) cnt++;
+            else cnt--;
+            if(cnt==0){
+                ele=i;
+                cnt=1;
+            }
+        }
+        cnt=0;
+        for(int i=0;i<arr.size();i++)
+        {
+            if(arr[ele]==arr[i]) cnt++;
+        }
+        if(cnt<=arr.size()/2) return -1;
+        return arr[ele];
+    }
+};
+
+
+//{ Driver Code Starts.
+
+int main() {
+
+    int t;
+    cin >> t;
+    cin.ignore();
+    while (t--) {
+        int n;
+        vector<int> a, b;
+        string input;
+        getline(cin, input);
+        stringstream ss(input);
+        int num;
+        while (ss >> num)
+            a.push_back(num);
+
+        Solution obj;
+        cout << obj.majorityElement(a) << endl;
+        cout << "~" << endl;
+    }
+
+    return 0;
+}
+
+// } Driver Code Ends

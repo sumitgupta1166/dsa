@@ -1,0 +1,30 @@
+class Solution {
+  public:
+    bool isValid(string& num) {
+        return !(num.length() > 1 && num[0] == '0');
+    }
+    bool check(string s, int start, string num1, string num2) {
+        string sum = to_string(stoll(num1) + stoll(num2));
+        int len = sum.length();
+        if (start + len > s.length() || s.substr(start, len) != sum)
+            return false;
+        if (start + len == s.length())
+            return true;
+        return check(s, start + len, num2, sum);
+    }
+    bool isSumString(string &s) {
+        int n= s.length();
+        for (int i = 1; i <= n / 2; i++) {
+        for (int j = 1; i + j < n; j++) {
+            string num1 = s.substr(0, i);
+            string num2 = s.substr(i, j);
+            if (!isValid(num1) || !isValid(num2))
+                continue;
+            if (check(s, i + j, num1, num2))
+                return true;
+        }
+    }
+    return false;
+    // code here
+    }
+};

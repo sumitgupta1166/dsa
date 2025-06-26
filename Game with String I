@@ -1,0 +1,28 @@
+class Solution {
+  public:
+    int minValue(string &s, int k) {
+         unordered_map<char,int> mp;
+        for(auto &freq:s){
+            mp[freq]++;
+        }
+        priority_queue<int> pq;
+        for(auto &val:mp){
+            pq.push(val.second);
+        }
+        while(k>0){
+            int temp=pq.top();
+            pq.pop();
+            temp--;
+            pq.push(temp);
+            k--;
+        }
+        int ans=0;
+        while(pq.size()){
+            int temp=pq.top();
+            pq.pop();
+            ans+=temp*temp;
+        }
+        return ans;
+        // code here
+    }
+};

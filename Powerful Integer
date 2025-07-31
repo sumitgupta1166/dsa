@@ -1,0 +1,26 @@
+class Solution {
+  public:
+    int powerfulInteger(vector<vector<int>>& intervals, int k) {
+        map<int, pair<int, int>> line;
+
+        for (auto& it : intervals) {
+            line[it[0]].first++;
+            line[it[1]].second--;
+        }
+    
+        int curr = 0;
+        int ans = -1;
+    
+        for (auto& p : line) {
+            int point = p.first;
+            auto delta = p.second;
+            curr += delta.first;
+            if (curr >= k)
+                ans = point;
+            curr += delta.second;
+        }
+    
+        return ans;
+        // code here
+    }
+};

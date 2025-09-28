@@ -1,0 +1,31 @@
+class Solution {
+  public:
+    vector<int> longestSubarray(vector<int>& arr, int x) {
+         int n = arr.size();
+        int bestlen = 0 , strt = 0 ;
+   
+        for(int i = 0 ; i < n ; i++){
+            int mx = arr[i] , mn = arr[i] ;
+        
+            for(int j = i ;  j < n ; j++){
+                
+                 mx = max(mx,arr[j]);
+                 mn = min(mn,arr[j]);
+                 
+                if(mx-mn <= x){
+                    int len = j-i+1;
+                    if(len > bestlen){
+                        strt = i ;
+                        bestlen = len;
+                    }
+                }else{ // no valid subarray
+                    break;
+                }
+            }
+        }
+        
+        return vector<int>(arr.begin() + strt , arr.begin()+strt+bestlen);
+        // code here
+        
+    }
+};

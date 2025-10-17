@@ -1,0 +1,30 @@
+/*
+class Node {
+  public:
+    int data;
+    Node* left;
+    Node* right;
+
+    Node(int value) {
+        data = value;
+        left = nullptr;
+        right = nullptr;
+    }
+};*/
+
+class Solution {
+  public:
+    int solve(Node* root, int sum){
+        if(!root) return 0;
+        int r = solve(root->right, sum);
+        int l = solve(root->left, root->data+sum+r);
+        int res = root->data+l+r;
+        root->data = r+sum;
+        return res;
+    }
+    void transformTree(Node *root) {
+        solve(root, 0);
+         // code here
+        
+    }
+};
